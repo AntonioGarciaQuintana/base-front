@@ -49,4 +49,9 @@ export class AuthService {
     login(pro: Login) {
         return this.http.post<Login>(this.serverUrl + '/auth/signin', pro);
     }
+
+    logout() {
+        this.setToken(null);
+        this._router.navigate(['/login']);
+    }
 }

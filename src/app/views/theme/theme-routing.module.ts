@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ColorsComponent } from './colors.component';
 import { TypographyComponent } from './typography.component';
 
 const routes: Routes = [
@@ -13,14 +12,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'colors'
-      },
-      {
-        path: 'colors',
-        component: ColorsComponent,
-        data: {
-          title: 'Colors'
-        }
+        redirectTo: 'typography'
       },
       {
         path: 'typography',

@@ -23,12 +23,12 @@ export class LoginComponent implements OnInit {
 
     return this._authService.login(login)
       .subscribe((data) => {
-        const authToken = data;
+        const authToken: any = data;
 
-        if (authToken === null) {
+        if (authToken.accessToken === null) {
           alert('Invalid username or password');
         } else {
-          this._authService.setToken(authToken.toString());
+          this._authService.setToken(authToken.accessToken.toString());
           this._router.navigate(['/dashboard']);
         }
       }, (err) => alert('Invalid username or password'));

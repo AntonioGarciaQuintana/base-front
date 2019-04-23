@@ -43,6 +43,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './service/auth.service';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { UsuerComponent } from './views/catalogs/users.component';
 
 @NgModule({
   imports: [
@@ -55,8 +57,10 @@ import { AuthService } from './service/auth.service';
     AppSidebarModule,
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
+    ModalModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
+    
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule
@@ -67,14 +71,16 @@ import { AuthService } from './service/auth.service';
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    UsuerComponent
   ],
   providers: [
     AuthService,
     {
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  }
+  },
+ 
 ],
   bootstrap: [ AppComponent ]
 })
