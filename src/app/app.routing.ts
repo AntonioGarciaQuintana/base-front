@@ -9,6 +9,8 @@ import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 import { UsuerComponent } from './views/catalogs/users.component';
+import { environment } from '../environments/environment';
+import { AuthGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
   {
@@ -45,11 +47,26 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'catalogs',
-    component: UsuerComponent,
+    path: '',
+    component: DefaultLayoutComponent,
     data: {
-      title: 'Catalogo de usuarios'
-    }
+      title: 'Inicio'
+    },
+    children: [
+      {
+        path: 'dashboard',
+        loadChildren: './views/dashboard/dashboard.module#DashboardModule'
+      },
+      {
+        path: 'catalogs',
+        component: UsuerComponent,
+        canActivate: [AuthGuard],
+        data: {
+          title: 'Catalogo de usuarios',
+          roles: [environment.roleAdmin, environment.roleUser]
+        }
+      }
+    ]
   },
   { path: '**', component: LoginComponent }
 ];

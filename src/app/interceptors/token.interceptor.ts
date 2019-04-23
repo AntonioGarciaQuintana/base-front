@@ -7,6 +7,7 @@ import {
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { AuthService } from '../service/auth.service';
+import { NotificationService } from '../service/notification.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -14,7 +15,7 @@ export class TokenInterceptor implements HttpInterceptor {
     tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
     constructor(
-        // private _toastr: ToastrService,
+         private _notification: NotificationService,
         private _authService: AuthService) {
         console.log('interceptor');
     }
@@ -47,10 +48,10 @@ export class TokenInterceptor implements HttpInterceptor {
     private handleAuthError(err: HttpErrorResponse): Observable<any> {
         if (err.status === 401) {
             this._authService.logout();
-            //  this._toastr.error('Invalid username or password');
+            this._notification.error('Username or password invalido');
         }
         if (err.status === 403) {
-            alert('No tiene permisos para realizar esta operacion');
+            this._notification.error('No tiene permisos para realizar esta operacion');
         }
 
         return throwError(err);

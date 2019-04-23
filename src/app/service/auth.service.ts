@@ -25,6 +25,15 @@ export class AuthService {
         return localStorage.getItem('token');
     }
 
+    setToken(authToken: string) {
+        if (!authToken) {
+            localStorage.removeItem('token');
+        } else {
+            localStorage.setItem('token', authToken);
+            this.setUserInfo(authToken);
+        }
+    }
+
     setUserInfo(authToken: string) {
         if (authToken) {
             this.decodedToken = this.helper.decodeToken(authToken);
@@ -38,12 +47,12 @@ export class AuthService {
         this.userInfoBehaviour.next(this.userInfo);
     }
 
-    setToken(authToken: string) {
-        if (!authToken) {
-            localStorage.removeItem('token');
-        } else {
-            localStorage.setItem('token', authToken);
-        }
+    getRole() {
+        return this.userInfo != null ? this.userInfo.Role : '';
+    }
+
+    getUser() {
+        return this.userInfo != null ? this.userInfo.UserName : '';
     }
 
     login(pro: Login) {
@@ -52,6 +61,10 @@ export class AuthService {
 
     logout() {
         this.setToken(null);
+        this._router.navigate(['/login']);
+    }
+
+    redirectToDefaultPage() {
         this._router.navigate(['/login']);
     }
 }

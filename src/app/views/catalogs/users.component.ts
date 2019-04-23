@@ -4,6 +4,7 @@ import { UsersSercice } from '../../service/users.service';
 import { MustMatch } from '../../helpers/MustMatch.validator';
 import { User } from '../../model/User';
 import { Role } from '../../model/Role';
+import { NotificationService } from '../../service/notification.service';
 
 
 @Component({
@@ -12,10 +13,17 @@ import { Role } from '../../model/Role';
 export class UsuerComponent implements OnInit {
 
   registerUserFormGroup: FormGroup;
-  constructor(private formBuilder: FormBuilder, private userService: UsersSercice) { }
+
+  /* pagination properties */
+  currentPage = 0;
+  sorting = 'id,desc';
+  totalElements = 0;
+  pageSize = 10;
+
+  constructor(private _formBuilder: FormBuilder, private _userService: UsersSercice, private _notification: NotificationService) { }
 
   ngOnInit(): void {
-    this.registerUserFormGroup = this.formBuilder.group({
+    this.registerUserFormGroup = this._formBuilder.group({
       nameControl: new FormControl('', Validators.required),
       userNameControl: new FormControl('', Validators.required),
       emailControl: new FormControl('', [Validators.required, Validators.email]),
@@ -36,13 +44,14 @@ export class UsuerComponent implements OnInit {
 
   onSave() {
     const user = this.getUserObject();
-    this.userService.save(user)
+    this._userService.save(user)
       .subscribe(
         result => {
-          alert('se guardo con exito');
+          this._notification.success('El usuario se guardó con exito');
+          this.onCancel();
         },
         error => {
-          alert('error');
+          this._notification.error('Ha ocurrido un error al guardar el usuario');
           console.log(error);
         }
       );
@@ -59,5 +68,18 @@ export class UsuerComponent implements OnInit {
     user.password = this.registerUserFormGroup.controls['passwordControl'].value;
 
     return user;
+  }
+
+
+  getPage(page: number) {
+    this._userService.getPage(page, this.pageSize, this.sorting)
+      .subscribe(
+        result => {
+
+        },
+        error => {
+
+        }
+      );
   }
 }

@@ -40,15 +40,22 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './service/auth.service';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { UsuerComponent } from './views/catalogs/users.component';
+import { UsersSercice } from './service/users.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ng6-toastr-notifications';
+import { NotificationService } from './service/notification.service';
+import { AuthGuard } from './guard/auth.guard';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     AppAsideModule,
     AppBreadcrumbModule.forRoot(),
@@ -59,8 +66,8 @@ import { UsuerComponent } from './views/catalogs/users.component';
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     TabsModule.forRoot(),
+    ToastrModule.forRoot(),
     ChartsModule,
-    
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule
@@ -76,11 +83,18 @@ import { UsuerComponent } from './views/catalogs/users.component';
   ],
   providers: [
     AuthService,
+    UsersSercice,
+    NotificationService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
     {
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  },
- 
+  }
 ],
   bootstrap: [ AppComponent ]
 })

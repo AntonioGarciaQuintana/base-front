@@ -42,6 +42,7 @@
             <thead>
               <tr>
                 <th>Nombre de usuario</th>
+                <th>Username</th>
                 <th>Rol</th>
                 <th>Fecha de registro</th>
                 <th>Estatus</th>
@@ -51,7 +52,7 @@
             <tbody>
               <tr>
                 <td>Servicio comunitario</td>
-
+                <td>Admin</td>
                 <td>Servicio</td>
                 <td>2012/01/01</td>
                 <td> <label class="switch switch-label switch-pill switch-success">
@@ -68,6 +69,7 @@
               </tr>
               <tr>
                 <td>Útiles escolares</td>
+                <td>Admin</td>
                 <td>Producto</td>
                 <td>2012/02/01</td>
                 <td> <label class="switch switch-label switch-pill switch-success">
@@ -78,6 +80,7 @@
               </tr>
               <tr>
                 <td>Limpieza de la ciudad</td>
+                <td>Admin</td>
                 <td>Servicio</td>
                 <td>2012/03/01</td>
                 <td> <label class="switch switch-label switch-pill switch-success">
@@ -88,6 +91,7 @@
               </tr>
               <tr>
                 <td>Cestos de basura</td>
+                <td>Admin</td>
                 <td>Servicio</td>
                 <td>2012/01/21</td>
                 <td>
@@ -258,7 +262,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="onCancel();registerModal.hide();">Cancelar</button>
-        <button type="button" class="btn btn-success" (click)="onSave()"
+        <button type="button" class="btn btn-success" (click)="onSave();registerModal.hide();"
           [disabled]="registerUserFormGroup.invalid">Guardar</button>
       </div>
       <!-- [disabled]="registerUserFormGroup.invalid" -->
